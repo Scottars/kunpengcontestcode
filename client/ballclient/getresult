@@ -1,0 +1,88 @@
+
+
+import matplotlib.pyplot as plt
+
+
+file = open('test.txt')
+mypoint=[]
+anamypoint=[]
+mydead=[]
+anamydead=[]
+
+while 1:
+    line = file.readline()
+    if line[0:1]=='我':
+        mydead.append(line[4:5])
+    elif line[0:1]=='敌':
+        anamydead.append(line[4:5])
+
+
+    if line[3:4]=='我':
+        # a=line[-4:]
+        a = line[11:]
+
+        mypoint.append(int(a))
+        print(str(a))
+    elif line[3:4]=='敌' and line[10:11]:
+        # a=line[-4:]
+        a=line[11:]
+        print('当前行的情况',line)
+        b=int(a)
+        anamypoint.append(int(a))
+        # print(type(b))
+        # print(b)
+
+    print(line)
+    if not line:
+        break
+    pass # do something
+
+Roundcount=len(mypoint)
+win=0
+lose=0
+tie=0
+pointproportion=[]
+rou=[]
+
+mydeadall=0
+anamydeadall=0
+for mydeadi in mydead:
+    mydeadall = mydeadall + int(mydeadi)
+for anamydeadi in anamydead:
+    anamydeadall = anamydeadall + int(anamydeadi)
+#
+#
+
+for i in range(Roundcount):
+    if mypoint[i]>anamypoint[i]:
+        win = win +1
+    elif mypoint[i]==anamypoint[i]:
+        tie= tie+1
+    else:
+        lose=lose+1
+
+    # pointproportion.append(mypoint[i]/anamypoint[i])
+    # rou.append(i)
+print('赢局次数:',win)
+print('输局次数',lose)
+
+print('我方死总次数',mydeadall)
+print('敌人死总次数',anamydeadall)
+
+
+
+plt.figure()
+plt.plot(rou, pointproportion)
+# plt.plot(rou,mypoint,'green')
+# plt.plot(rou,anamypoint,'red')
+plt.legend(['Pointpercent','My Point','Anamy Point'])
+plt.xlabel("time(s)")
+plt.ylabel("value(m)")
+plt.title("A simple plot")
+plt.show()
+
+
+
+
+
+file.close()
